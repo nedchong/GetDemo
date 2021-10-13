@@ -15,7 +15,7 @@ class HomePageData:
             if sheet.cell(row=i, column=1).value == test_case_name:
 
                 for j in range(2, sheet.max_column + 1):  # to get columns
-                    # Dict["lastname"]="shetty
+                    # Dict["lastname"] = "ln1"
                     dict[sheet.cell(row=1, column=j).value] = sheet.cell(row=i, column=j).value
         return[dict]
 
