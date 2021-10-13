@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="1" tests="2" time="12.338" timestamp="2021-10-13T04:00:30.413699" hostname="Asus-i3"><testcase classname="test_HomePage.TestHomePage" name="test_formSubmission[getData0]" time="0.001"><skipped type="pytest.skip" message="unconditional skip">C:\Users\ned\PycharmProjects\PythonSelFramework\tests\test_HomePage.py:12: unconditional skip</skipped></testcase><testcase classname="test_e2e.TestOne" name="test_e2e" time="11.783"><failure message="AssertionError: assert 'xSuccess! Thank you!' in '×\nSuccess! Thank you! Your order will be delivered in next few weeks :-).'">self = &lt;tests.test_e2e.TestOne object at 0x000001957B82BDF0&gt;
+
+    def test_e2e(self):
+        log = self.getLogger()
+        home_page = HomePage(self.driver)
+        checkout_page = home_page.shop_items()
+        log.info("getting all the card titles")
+        cards = checkout_page.get_card_titles()
+        i = -1
+        for card in cards:
+            i = i + 1
+            card_text = card.text
+            log.info(card_text)
+            if card_text == "Blackberry":
+                checkout_page.get_card_footer()[i].click()
+    
+        self.driver.find_element_by_css_selector("a[class*='btn-primary']").click()
+    
+        confirm_page = checkout_page.check_out_items()
+        log.info("Entering country name as ind")
+        self.driver.find_element_by_id("country").send_keys("ind")
+        # time.sleep(5)
+        self.verify_link_presence("India")
+    
+        self.driver.find_element_by_link_text("India").click()
+        self.driver.find_element_by_xpath("//div[@class='checkbox checkbox-primary']").click()
+        self.driver.find_element_by_css_selector("[type='submit']").click()
+        text_match = str.rstrip(self.driver.find_element_by_css_selector("[class*='alert-success']").text)
+        log.info("Text received from application is " + text_match)
+    
+        # assert ("Success! Thank you!" in text_match)
+        # false failure to test screenshot
+&gt;       assert ("xSuccess! Thank you!" in text_match)
+E       AssertionError: assert 'xSuccess! Thank you!' in '×\nSuccess! Thank you! Your order will be delivered in next few weeks :-).'
+
+test_e2e.py:38: AssertionError</failure></testcase></testsuite></testsuites>
